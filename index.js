@@ -10,14 +10,16 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const app = express();
 
 app.get('/', (req, res)=> {
-    res.send('hello  I am working ')
+    res.sendFile(__dirname + '/index.html')
 })
+
+client.connect(err => {
+  const productCollection = client.db("organicdb").collection("products");
+  //const product = {name:"modhu", price: 25, quantity: 20};
+  
+  //client.close();
+});
 
 app.listen(3000);
 
 
-
-client.connect(err => {
-  const collection = client.db("organicdb").collection("products");
-  client.close();
-});
