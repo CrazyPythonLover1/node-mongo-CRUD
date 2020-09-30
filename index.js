@@ -27,6 +27,13 @@ client.connect(err => {
           res.send( documents)
       })
   })
+
+  app.get('/product/:id', (req,res)=>{
+    productCollection.find({_id: ObjectId(req.params.id)})
+    .toArray((err, documents) =>{
+      res.send(documents[0])
+    })
+  })
   
   app.post("/addProduct", (req, res) =>{
     const product = req.body;
@@ -38,10 +45,9 @@ client.connect(err => {
   })
 
   app.delete('/delete/:id', (req, res) => {
-    const id = req.params.id;
     productCollection.deleteOne({_id: ObjectId(req.params.id)})
-    .then((err, result) => {
-        
+    .then((result) => {
+        console.log(result);
     })
   })
   //client.close();
