@@ -1,6 +1,7 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+const bodyParser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 
 const pass = 'FWlj1zV1TUhZoqtw';
 
@@ -33,6 +34,14 @@ client.connect(err => {
     .then(result =>{
         console.log('One product added')
         res.send("success");
+    })
+  })
+
+  app.delete('/delete/:id', (req, res) => {
+    const id = req.params.id;
+    productCollection.deleteOne({_id: ObjectId(req.params.id)})
+    .then((err, result) => {
+        
     })
   })
   //client.close();
