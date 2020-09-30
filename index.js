@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient
 
 const pass = 'FWlj1zV1TUhZoqtw';
 
@@ -19,6 +19,14 @@ app.get('/', (req, res)=> {
 client.connect(err => {
   const productCollection = client.db("organicdb").collection("products");
   //const product = {name:"modhu", price: 25, quantity: 20};
+  
+  app.get('/products', (req, res) =>{
+      productCollection.find({}).limit(3)
+      .toArray(( err, documents ) => {
+          res.send( documents)
+      })
+  })
+  
   app.post("/addProduct", (req, res) =>{
     const product = req.body;
     productCollection.insertOne(product)
